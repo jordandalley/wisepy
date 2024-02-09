@@ -42,11 +42,9 @@ def webhook():
         # Get the data from the webhook
         webhook_data = request.json
 
-        #webhook_currency = webhook_data['data']['currency']
-        webhook_currency = "AUD"
+        webhook_currency = webhook_data['data']['currency']
         webhook_transaction_type = webhook_data['data']['transaction_type']
-        #webhook_amount = webhook_data['data']['amount']
-        webhook_amount = 5335
+        webhook_amount = webhook_data['data']['amount']
         webhook_balance = webhook_data['data']['post_transaction_balance_amount']
 
         if webhook_transaction_type == "credit" and webhook_currency == wise_source_currency and webhook_amount >= wise_minimum_deposit:
