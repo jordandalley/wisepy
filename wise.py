@@ -3,12 +3,13 @@ import uuid
 import requests
 import threading
 from flask import Flask, request
+from gevent.pywsgi import WSGIServer
 
 # Check if Python version is less than 3
 if sys.version_info < (3, 0):
     print("This script requires Python 3 or later to run.")
     sys.exit(1)
-  
+
 # Production
 #wise_api_url = "https://api.transferwise.com"
 #wise_api_token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
@@ -43,8 +44,10 @@ def webhook():
         webhook_data = request.json
 
         webhook_currency = webhook_data['data']['currency']
+        #webhook_currency = "AUD"
         webhook_transaction_type = webhook_data['data']['transaction_type']
         webhook_amount = webhook_data['data']['amount']
+        #webhook_amount = 5335
         webhook_balance = webhook_data['data']['post_transaction_balance_amount']
 
         if webhook_transaction_type == "credit" and webhook_currency == wise_source_currency and webhook_amount >= wise_minimum_deposit:
@@ -232,4 +235,8 @@ def startTransfer(profile_id, recipient_id, quote_id):
         print("An unexpected error occurred while starting transfer:", e)
 
 if __name__ == '__main__':
-    app.run(debug=False, port=webhook_port)
+    # Development
+    #app.run(debug=True, host='0.0.0.0', port=webhook_port)
+    # Production
+    http_server = WSGIServer(('', webhook_port), app)
+    http_server.serve_forever()
