@@ -6,7 +6,7 @@ After=network.target
 User=debian
 Group=debian
 WorkingDirectory=/home/debian/wisepy
-ExecStart=/usr/bin/python3 wisepy.py
+ExecStart=/usr/bin/python3 -u wisepy.py
 Restart=always
 RestartSec=120
 
