@@ -31,10 +31,6 @@ wise_target_account_number = "060901078703100"
 # Port to run the flask webhook on
 webhook_port = 8888
 
-# Generate a random uuid for idempotency
-gen_uuid = uuid.uuid4()
-uuid = str(gen_uuid)
-
 app = Flask(__name__)
 
 @app.route('/balance-update', methods=['POST'])
@@ -197,7 +193,7 @@ def startTransfer(profile_id, recipient_id, quote_id):
         transfer_data = {
             "targetAccount": recipient_id,
             "quoteUuid": quote_id,
-            "customerTransactionId": uuid,
+            "customerTransactionId": str(uuid.uuid4()),
             "details": {
                 "reference": "Salary",
                 "transferPurpose": "Salary",
