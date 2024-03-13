@@ -1,0 +1,14 @@
+[Unit]
+Description=WisePy Automated Transfer Daemon
+After=network.target
+
+[Service]
+User=debian
+Group=debian
+WorkingDirectory=/home/debian/wisepy
+ExecStart=/usr/bin/python3 wisepy.py
+Restart=always
+RestartSec=120
+
+[Install]
+WantedBy=multi-user.target
