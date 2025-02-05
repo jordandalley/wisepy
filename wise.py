@@ -91,27 +91,6 @@ def getProfile(webhook_amount):
             print("Error: Personal profile not found.")
     except requests.exceptions.RequestException as e:
         print("Error fetching profile:", e)
-    except Exception as e:
-        print("An unexpected error occurred while fetching profile:", e)
-
-def getProfile(webhook_amount):
-    try:
-        # Fetch the profile ID related to a personal account (change to business if it's a business account)
-        profile_response = requests.get(f"{wise_api_url}/v1/profiles", headers={"Authorization": f"Bearer {wise_api_token}"})
-
-        # Check if the request was successful
-        profile_response.raise_for_status()
-
-        profile_json = profile_response.json()
-        profile_id = next((profile['id'] for profile in profile_json if profile['type'] == 'personal'), None)
-
-        if profile_id:
-            # Profile ID fetched - move onto finding the recipient in the target currency
-            getRecipient(webhook_amount, profile_id)
-        else:
-            print("Error: Personal profile not found.")
-    except requests.exceptions.RequestException as e:
-        print("Error fetching profile:", e)
     except KeyError as e:
         print("KeyError while processing profile JSON data:", e)
     except StopIteration:
