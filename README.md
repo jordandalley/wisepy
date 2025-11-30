@@ -1,3 +1,7 @@
+# No longer maintained
+
+Moved this function to Cloudflare workers so I don't have to run any infra: https://github.com/jordandalley/autowise
+
 # WisePy
 
 WisePy creates a webhook listener using Flask that listens for incoming connections from Wise (formally Transferwise).
